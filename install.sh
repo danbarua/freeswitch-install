@@ -90,7 +90,6 @@ done
 #setup init.d
 wget --no-check-certificate $FS_INSTALL_REPO/freeswitch.init -O /etc/init.d/freeswitch
 chmod 755 /etc/init.d/freeswitch
-chmod +x /etc/init.d/freeswitch
 
 #make init.d/freeswitch run at boot
 update-rc.d -f freeswitch defaults
@@ -100,11 +99,12 @@ cp $FS_BASE_PATH/freeswitch/debian/freeswitch-sysvinit.freeswitch.default /etc/d
 ln -s /usr/local/freeswitch/bin/fs_cli /usr/local/bin/
 ln -s /usr/local/freeswitch/bin/freeswitch /usr/local/bin/freeswitch
 
+#chmod freeswitch dir so you can cd to it
+chmod 755 /usr/local/freeswitch
+
 #start daemon
 /etc/init.d/freeswitch start
 
-#test it!
-fs_cli
 
 cd $CURRENT_PATH
 # Install Complete
