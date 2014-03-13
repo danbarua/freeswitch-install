@@ -116,6 +116,5 @@ echo "**************************************************************"
 echo "Congratulations, FreeSWITCH is now installed at '$FS_INSTALLED_PATH'"
 echo "**************************************************************"
 echo ""
-echo "Add yourself to the FreeSWITCH group to be able to edit FreeSwitch config files"
 echo ""
 exit 0
