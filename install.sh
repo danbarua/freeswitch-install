@@ -20,11 +20,29 @@ echo "FreeSWITCH will be installed in $FS_INSTALLED_PATH"
 
 apt-get -y update
 apt-get -y install autoconf automake devscripts gawk g++ git-core libjpeg-dev libncurses5-dev libtool make python-dev gawk pkg-config libtiff5-dev libperl-dev libgdbm-dev libdb-dev gettext libssl-dev libcurl4-openssl-dev libpcre3-dev libspeex-dev libspeexdsp-dev libsqlite3-dev libedit-dev libldns-dev libpq-dev
+if [ ! $? -eq 0]
+then
+  echo "Unable to install dependencies"
+  exit $?
+fi
+
 cd $FS_BASE_PATH
 git clone $FS_GIT_REPO
+if [! $? -eq 0]
+then
+ echo "Unable to checkout source code"
+ exit $?
+fi
+
 cd $FS_BASE_PATH/freeswitch
 sh bootstrap.sh -j && ./configure --prefix=$FS_INSTALLED_PATH
 [ -f modules.conf ] && cp modules.conf modules.conf.bak
+
+if [! $? -eq 0]
+then
+  echo "Unable to bootstrap compilation"
+  exit $?
+fi
 
 sed -i \
 -e "s/#applications\/mod_curl/applications\/mod_curl/g" \
@@ -45,6 +63,8 @@ sed -i \
 -e "s/#say\/mod_say_hu/say\/mod_say_hu/g" \
 -e "s/#say\/mod_say_th/say\/mod_say_th/g" \
 modules.conf
+
+
 make && make install && make sounds-install && make moh-install
 
 # Enable FreeSWITCH modules
