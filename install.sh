@@ -12,6 +12,7 @@ FS_INSTALL_REPO=https://raw.github.com/danbarua/freeswitch-install/master
 FS_GIT_REPO=https://stash.freeswitch.org/scm/fs/freeswitch.git
 FS_INSTALLED_PATH=/usr/local/freeswitch
 FS_BASE_PATH=/usr/local/src
+FS_BRANCH=master #change to v1.4 for stable
 
 CURRENT_PATH=$PWD
 
@@ -27,7 +28,9 @@ then
 fi
 
 cd $FS_BASE_PATH
-git clone $FS_GIT_REPO
+git clone $FS_GIT_REPO freeswitch
+cd freeswitch
+git checkout FS_BRANCH
 if [! $? -eq 0]
 then
  echo "Unable to checkout source code"
